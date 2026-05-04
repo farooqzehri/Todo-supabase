@@ -2,34 +2,32 @@ import React, { useState } from 'react'
 import { supabase } from '../config/supabase'
 
 function Register() {
-    const [email , setEmail] = useState('')
-    const [password , setPassword] = useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
 
     const registerUser = async (e) => {
         e.preventDefault()
-        console.log(email , password);
-        
-        const {data , error} = await supabase.auth.signUp({
-            email , password
-        })
+        const { data, error } = await supabase.auth.signUp({ email, password })
 
-        if(error) {
-            console.log(error.message);
-              }else{
-                console.log(data);
-                alert("check your Emial for conformation.")
-                 
-              }
+        if (error) {
+            alert(error.message)
+        } else {
+            alert("Success! Check your email for the confirmation link.")
+        }
     }
-  return (
-    <>
-    <form onSubmit={registerUser}> 
-        <input type="email" placeholder='Enter your Email..'  value={email} onChange={(e)=>setEmail(e.target.value)}/>
-        <input type="password" placeholder='Enter your Password.' value={password} onChange={(e)=>setPassword(e.target.value)} />
-        <button type='submit'>Register</button>
-    </form>
-    </>
-  )
+
+    return (
+        <div className="page-container">
+            <div className="auth-card">
+                <h2>Create Account</h2>
+                <form onSubmit={registerUser}>
+                    <input type="email" placeholder='Email Address' value={email} onChange={(e)=>setEmail(e.target.value)} required />
+                    <input type="password" placeholder='Password' value={password} onChange={(e)=>setPassword(e.target.value)} required />
+                    <button className="primary-btn" type='submit'>Register</button>
+                </form>
+            </div>
+        </div>
+    )
 }
 
 export default Register
